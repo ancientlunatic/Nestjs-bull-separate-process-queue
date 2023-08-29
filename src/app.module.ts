@@ -23,18 +23,9 @@ import { SameProcess } from './same.process';
         name: 'SEPARATE', // this will run in its own process
         processors: [{
           path: join(__dirname, 'separate.process'),
-          concurrency: 2
+          concurrency: 3
         }],
       },
-      {
-        name: 'ANOTHERSEPARATE',
-        processors: [
-          {
-            path: join(__dirname, 'another-separate.process'),
-            concurrency: 2
-          }
-        ]
-      }
     ),
   ],
   controllers: [AppController],

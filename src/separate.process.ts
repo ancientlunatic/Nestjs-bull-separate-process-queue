@@ -3,8 +3,8 @@ import { Job } from "bull";
 export default async function (job: Job, cb) {
   try {
     await cpuIntensiveTask(job, 9);
-    cb(new Error('unexpected error'),
-      'Work done'
+    cb(null,
+      'work Done'
     );
   } catch (err) {
     cb(err, null);

@@ -69,10 +69,8 @@ One process added in after running the Worker, A new tread is created by the wor
 ![image.png](/media/after_worker_invoke.png)
 
 
-
-![image.png](/media/after_worker_invoke.png)
-
 ### Scenario: Concurrent Execution of Requests
+![image.png](/media/network-report.jpeg)
 
 In the context of our system, we have two distinct types of requests:
 

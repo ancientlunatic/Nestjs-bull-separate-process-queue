@@ -70,7 +70,7 @@ One process added in after running the Worker, A new tread is created by the wor
 
 
 ### Scenario: Concurrent Execution of Requests
-![image.png](/media/network-report.jpeg)
+![image.png](/media/network-report.png)
 
 In the context of our system, we have two distinct types of requests:
 
@@ -78,7 +78,7 @@ In the context of our system, we have two distinct types of requests:
 These requests are designed to execute on a separate thread. The heavy computational workload of these requests is managed by a Bull Queue, which efficiently processes them. Each of these requests takes approximately 10 seconds to complete due to the nature of the computational tasks involved.
 
 **Main-Thread Requests:**
-These requests run on the main event loop of our system. Unlike the CPU-intensive requests, they are not offloaded to a separate thread. Each of these requests takes around 4 seconds to execute.
+These requests run on the main event loop of our system. Unlike the CPU-intensive requests, they are not offloaded to a separate thread. Each of these requests takes around 5 seconds to execute.
 
 **Observations:**
 

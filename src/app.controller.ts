@@ -6,7 +6,6 @@ import { Response } from 'express';
 @Controller()
 export class AppController {
   constructor(
-    @InjectQueue('SAME') private readonly same: Queue,
     @InjectQueue('SEPARATE') private readonly separate: Queue,
   ) { }
 
@@ -14,13 +13,9 @@ export class AppController {
   async blockedProcess(@Query('name') name: string, @Res() response: Response) {
     console.log("************** start execution ******************");
     const job = await this.separate.add({ message: 'FORK OFF.', name });
-    // job.finished().then((res) => {
-    //   console.log('job finished log', res);
-    // });
     console.log("************** job await end ******************");
-
     const completionListener = this.onCompletion(job.id);
-    return await completionListener.then((res) => {
+    return completionListener.then((res) => {
       return response.send('task done');
     });
   }

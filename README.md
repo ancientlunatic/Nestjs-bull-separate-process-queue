@@ -62,10 +62,10 @@ After adding the job in the Queue it will start executing as soon as the Worker 
 
 ## Results
 
-Node process before running the bull worker
+Before the execution of the Bull Queue task, the task manager shows three active processes that are concurrently operational, managing different aspects of the system's tasks.
 ![image.png](/media/before_running_worker.png)
 
-One process added in after running the Worker, A new tread is created by the worker.
+Once the Bull Queue task is initiated, an additional process becomes visible in the task manager. This newly added process is dedicated to executing the Bull Queue task, contributing to the efficient multitasking and workload distribution of the system.
 ![image.png](/media/after_worker_invoke.png)
 
 

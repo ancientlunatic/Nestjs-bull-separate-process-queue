@@ -82,6 +82,18 @@ These requests run on the main event loop of our system. Unlike the CPU-intensiv
 
 **Observations:**
 
-When we initiate both a "CPU-Intensive Request" and a "Main-Thread Request" simultaneously, they execute concurrently. Each request follows its expected execution time, with the CPU-intensive request taking about 10 seconds and the main-thread request taking about 4 seconds.
+**Block 1: Sequential Execution**
 
-However, when we initiate the same "Main-Thread Request" twice in succession, we notice a sequential execution pattern. The second request waits for the completion of the first request before it starts executing. This is likely due to the single-threaded nature of the main event loop, which handles these requests sequentially.
+In this block, two types of API calls are made (**"Main-thread" API Call** and **CPU-Intensive API Call**) sequentially to observe their individual execution times, with minimal time spacing to prevent overlap.
+
+We have observed that **"Main-thread" API Call** is taking approximately 5 second and **CPU-Intensive API Call** is taking approximately 10 second to execute.
+
+**Block 2: Concurrent Execution with Queue**
+
+In this block, both **"Main-thread"** and **"CPU-intensive"** API calls are initiated simultaneously to observe how the system handles concurrency, particularly the parallel processing of **"CPU-intensive"** tasks through a separate queue.
+
+We have observed that the **"Main-thread"** API call's execution remains unaffected by the concurrent initiation of a **"CPU-intensive"** call, **"CPU-intensive"** API call's execution is managed in parallel using a separate processing mechanism, resulting in reduced impact on the "Main-thread" call's 
+
+**Block 3: Sequential "Main-thread" Calls**
+
+In this block, two consecutive "Main-thread" API calls are made, we notice a sequential execution pattern. The second request waits for the completion of the first request before it starts executing. This is likely due to the single-threaded nature of the main event loop, which handles these requests sequentially.

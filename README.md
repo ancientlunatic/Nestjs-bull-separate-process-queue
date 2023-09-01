@@ -94,6 +94,10 @@ In this block, both **"Main-thread"** and **"CPU-intensive"** API calls are init
 
 We have observed that the **"Main-thread"** API call's execution remains unaffected by the concurrent initiation of a **"CPU-intensive"** call, **"CPU-intensive"** API call's execution is managed in parallel using a separate processing mechanism, resulting in reduced impact on the "Main-thread" call's 
 
+![image.png](/media/sepreate_process_info.png)
+
+As we can also see that we have 2 different process Ids are printed in console one is for main thread process Process which consumed by the main thread and another one the separate thread process id which is consumed by the CPU intensive task.
+
 **Block 3: Sequential "Main-thread" Calls**
 
 In this block, two consecutive "Main-thread" API calls are made, we notice a sequential execution pattern. The second request waits for the completion of the first request before it starts executing. This is likely due to the single-threaded nature of the main event loop, which handles these requests sequentially.

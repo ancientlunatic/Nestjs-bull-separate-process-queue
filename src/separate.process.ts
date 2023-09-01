@@ -2,6 +2,7 @@ import { Job } from "bull";
 
 export default async function (job: Job, cb) {
   try {
+    console.log("Seperate Thread Process Id  => ", process.pid);
     await cpuIntensiveTask(job, 9);
     cb(null,
       'work Done'

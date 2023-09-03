@@ -3,7 +3,7 @@ import { Job } from "bull";
 export default async function (job: Job, cb) {
   try {
     console.log("Seperate Thread Process Id  => ", process.pid);
-    await cpuIntensiveTask(job, 9);
+    await cpuIntensive(9);
     cb(null,
       'work Done'
     );
@@ -12,15 +12,16 @@ export default async function (job: Job, cb) {
   }
 }
 
-async function cpuIntensiveTask(job, seconds) {
-  return new Promise((res, rej) => {
-    setTimeout(async () => {
-      if (seconds > 0) {
-        console.log('separate process second CPU intensive ==> ', job?.data?.name, job?.data?.name, seconds);
-        res(await cpuIntensiveTask(job, seconds - 1));
-      } else {
-        res(true);
-      }
-    }, 1000);
-  });
+
+export function cpuIntensive(seconds: number) { // number of seconds to comsume the process
+  const newDate = new Date();
+  const elapsedTime = (newDate.getTime() + (seconds * 1000));
+  let runLoop = true;
+  while (runLoop) {
+    const currentTime = new Date().getTime();
+    if (currentTime % 1000 === 0) {
+      console.log('separate process second CPU intensive ==> ', seconds);
+    }
+    runLoop = !(currentTime > elapsedTime);
+  }
 }

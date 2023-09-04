@@ -17,6 +17,7 @@ export class AppController {
       return res;
     });
   }
+
   @Get('/cpu-intensive')
   async blockedProcess(@Query('name') name: string, @Res() response: Response) {
     // console.log("************** start execution ******************");
@@ -31,16 +32,13 @@ export class AppController {
   @Get('/main-thread')
   async blocked() {
     console.log("main thread Process Id  => ", process.pid);
-    const response = await this.cpuIntensiveTask(5);
+    const response = await this.cpuIntensive(5);
   }
 
-  // @Get('/heavy-lifting-task')
+  @Get('/heavy-lifting-task')
   async heavyLiftedTask(@Res() response: Response) {
     console.log("************** start execution ******************");
     const job = await this.separate.add({ message: 'FORK OFF.' });
-    // job.finished().then((res) => {
-    //   console.log('job finished log', res);
-    // });
     console.log("************** job await end ******************", job.id);
     const completionListener = this.onCompletion(job.id);
     return await completionListener.then((res) => {
@@ -56,16 +54,16 @@ export class AppController {
     });
   }
 
-  async cpuIntensiveTask(seconds) {
-    return new Promise((res, rej) => {
-      setTimeout(async () => {
-        if (seconds > 0) {
-          console.log('*****************Main Thread Process****************', seconds);
-          res(await this.cpuIntensiveTask(seconds - 1));
-        } else {
-          res(true);
-        }
-      }, 1000);
-    });
+  cpuIntensive(seconds: number) { // number of seconds to comsume the process
+    const newDate = new Date();
+    const elapsedTime = (newDate.getTime() + (seconds * 1000));
+    let runLoop = true;
+    while (runLoop) {
+      const currentTime = new Date().getTime();
+      if (currentTime % 1000 === 0) {
+        console.log('Main Thread process intensive ==> ', seconds);
+      }
+      runLoop = !(currentTime > elapsedTime);
+    }
   }
 }
